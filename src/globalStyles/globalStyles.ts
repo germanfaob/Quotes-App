@@ -16,10 +16,9 @@ body{
     margin: 0;
     overflow-x: hidden;
     font-family: 'Montserrat', sans-serif;
-    background-image: url(../images/background.webp);
+    background-image: url(../images/bg2.png);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
 }
 
 #root{
@@ -27,6 +26,7 @@ body{
     flex-direction: column;
     width: 100vw;
     height: 100%;
+    padding: .93rem;
 }
 
 a{
