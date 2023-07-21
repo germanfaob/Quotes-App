@@ -11,13 +11,14 @@ interface QuoteTheme {
 interface QuoteCardProps {
   quote: string;
   author: string;
+  className?: string;
 }
 
 export const QuoteCard = (props: QuoteCardProps) => {
-  const { quote, author } = props;
+  const { quote, author, className } = props;
 
   return (
-    <ContainerCard>
+    <ContainerCard className={className}>
       <p>{quote}</p>
       <p>{author}</p>
     </ContainerCard>
@@ -30,6 +31,18 @@ const ContainerCard = styled.div<QuoteTheme>`
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  &.quote-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: 0.3s;
+
+    &.show {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+  }
 
   & > p:first-child {
     font-size: clamp(0.75rem, 3vw, 1.25rem);

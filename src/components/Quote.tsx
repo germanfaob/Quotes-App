@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { quotes } from "../data/quoteData";
 import { QuoteCard } from "./QuoteCard";
@@ -17,6 +17,7 @@ interface ContainerQuoteProps {
 export const Quote: React.FC = () => {
   const [filterCategory, setFilterCategory] = useState<string>("");
   const [filteredQuotes, setFilteredQuotes] = useState<QuoteInterface[]>([]);
+  const [showQuote, setShowQuote] = useState<boolean>(false);
 
   const handleCategoryChange = (selectedCategory: string) => {
     const filtered = quotes.filter(
@@ -24,6 +25,7 @@ export const Quote: React.FC = () => {
     );
     setFilterCategory(selectedCategory);
     setFilteredQuotes(filtered);
+    setShowQuote(true);
   };
 
   const handleRandomQuote = () => {
@@ -31,7 +33,17 @@ export const Quote: React.FC = () => {
     const randomQuote = quotes[randomIndex];
     setFilteredQuotes([randomQuote]);
     setFilterCategory("");
+    setShowQuote(true);
   };
+
+  useEffect(() => {
+    if (showQuote) {
+      const timer = setTimeout(() => {
+        setShowQuote(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showQuote]);
 
   return (
     <Container>
@@ -53,7 +65,12 @@ export const Quote: React.FC = () => {
       </div>
       <div>
         {filteredQuotes.map((quote) => (
-          <QuoteCard key={quote.id} quote={quote.quote} author={quote.author} />
+          <QuoteCard
+            key={quote.id}
+            quote={quote.quote}
+            author={quote.author}
+            className={`quote-card ${showQuote ? "show" : ""}`}
+          />
         ))}
       </div>
     </Container>
